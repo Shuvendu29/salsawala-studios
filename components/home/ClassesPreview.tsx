@@ -17,11 +17,11 @@ const styleColors: Record<string, string> = {
   Zumba: 'from-indigo-600 to-purple-500',
 }
 
-const levelColors: Record<string, 'success' | 'warning' | 'primary' | 'outline'> = {
+const levelColors: Record<string, 'success' | 'warning' | 'primary' | 'outline' | 'danger'> = {
   Beginner: 'success',
   'All Levels': 'primary',
   Intermediate: 'warning',
-  Advanced: 'danger' as any,
+  Advanced: 'danger',
 }
 
 export function ClassesPreview() {
