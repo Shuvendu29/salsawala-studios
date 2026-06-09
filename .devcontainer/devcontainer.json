@@ -1,37 +1,25 @@
 {
-  "name": "Salsawala Studios — Next.js + Firebase",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
-  "forwardPorts": [3000, 5000, 5001],
+  "name": "Salsawala Studios",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
-      "label": "Next.js Dev Server",
+      "label": "Next.js App",
       "onAutoForward": "openBrowser"
-    },
-    "5000": {
-      "label": "Firebase Hosting"
-    },
-    "5001": {
-      "label": "Firebase Emulator UI"
     }
   },
-  "postCreateCommand": "npm install --legacy-peer-deps && npm install -g firebase-tools && cp .env.example .env.local",
+  "postCreateCommand": "npm install --legacy-peer-deps",
   "customizations": {
     "vscode": {
       "extensions": [
         "bradlc.vscode-tailwindcss",
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
-        "dsznajder.es7-react-js-snippets",
-        "formulahendry.auto-rename-tag",
-        "ms-vscode.vscode-typescript-next"
+        "dsznajder.es7-react-js-snippets"
       ],
       "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
-        "editor.tabSize": 2,
-        "tailwindCSS.experimental.classRegex": [
-          ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-        ]
+        "editor.tabSize": 2
       }
     }
   }
