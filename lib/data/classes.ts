@@ -1,0 +1,151 @@
+export interface ScheduleClass {
+  id: string
+  style: string
+  instructor: string
+  day: string
+  time: string
+  duration: string
+  level: string
+  spots: number
+  totalSpots: number
+  price: number
+  isOnline?: boolean
+}
+
+export const weeklySchedule: ScheduleClass[] = [
+  {
+    id: '1',
+    style: 'Salsa',
+    instructor: 'Hitesh H. Teckchandani',
+    day: 'Monday',
+    time: '7:00 PM',
+    duration: '60 min',
+    level: 'Beginner',
+    spots: 8,
+    totalSpots: 15,
+    price: 800,
+  },
+  {
+    id: '2',
+    style: 'Bachata',
+    instructor: 'Hitesh H. Teckchandani',
+    day: 'Tuesday',
+    time: '7:00 PM',
+    duration: '60 min',
+    level: 'All Levels',
+    spots: 5,
+    totalSpots: 15,
+    price: 800,
+  },
+  {
+    id: '3',
+    style: 'Hip-Hop',
+    instructor: 'Akash Agarwal',
+    day: 'Wednesday',
+    time: '6:00 PM',
+    duration: '75 min',
+    level: 'Beginner',
+    spots: 10,
+    totalSpots: 20,
+    price: 700,
+  },
+  {
+    id: '4',
+    style: 'Contemporary',
+    instructor: 'Priyam Bose',
+    day: 'Wednesday',
+    time: '7:30 PM',
+    duration: '60 min',
+    level: 'All Levels',
+    spots: 7,
+    totalSpots: 12,
+    price: 750,
+  },
+  {
+    id: '5',
+    style: 'Salsa',
+    instructor: 'Hitesh H. Teckchandani',
+    day: 'Thursday',
+    time: '7:00 PM',
+    duration: '60 min',
+    level: 'Intermediate',
+    spots: 4,
+    totalSpots: 12,
+    price: 900,
+  },
+  {
+    id: '6',
+    style: 'Bollywood',
+    instructor: 'Priyam Bose',
+    day: 'Thursday',
+    time: '5:30 PM',
+    duration: '60 min',
+    level: 'All Levels',
+    spots: 12,
+    totalSpots: 20,
+    price: 700,
+  },
+  {
+    id: '7',
+    style: 'Kizomba',
+    instructor: 'Hitesh H. Teckchandani',
+    day: 'Friday',
+    time: '8:00 PM',
+    duration: '75 min',
+    level: 'All Levels',
+    spots: 6,
+    totalSpots: 12,
+    price: 900,
+  },
+  {
+    id: '8',
+    style: 'Pilates',
+    instructor: 'Priyam Bose',
+    day: 'Saturday',
+    time: '9:00 AM',
+    duration: '60 min',
+    level: 'All Levels',
+    spots: 9,
+    totalSpots: 15,
+    price: 700,
+  },
+  {
+    id: '9',
+    style: 'Hip-Hop',
+    instructor: 'Akash Agarwal',
+    day: 'Saturday',
+    time: '11:00 AM',
+    duration: '75 min',
+    level: 'Intermediate',
+    spots: 6,
+    totalSpots: 15,
+    price: 800,
+  },
+  {
+    id: '10',
+    style: 'Salsa Social',
+    instructor: 'Hitesh H. Teckchandani',
+    day: 'Sunday',
+    time: '7:00 PM',
+    duration: '120 min',
+    level: 'All Levels',
+    spots: 20,
+    totalSpots: 40,
+    price: 500,
+  },
+  {
+    id: '11',
+    style: 'Zumba',
+    instructor: 'Priyam Bose',
+    day: 'Sunday',
+    time: '10:00 AM',
+    duration: '60 min',
+    level: 'All Levels',
+    spots: 15,
+    totalSpots: 25,
+    price: 600,
+    isOnline: true,
+  },
+]
+
+export const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

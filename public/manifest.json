@@ -1,0 +1,26 @@
+{
+  "name": "Salsawala Studios",
+  "short_name": "Salsawala",
+  "description": "Kolkata's Premier Dance Studio — 15+ Dance Styles",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#C41E3A",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["fitness", "lifestyle", "education"],
+  "lang": "en-IN",
+  "orientation": "portrait-primary"
+}

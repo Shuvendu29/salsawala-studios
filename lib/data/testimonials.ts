@@ -1,0 +1,58 @@
+import { Testimonial } from '../types'
+
+export const testimonials: Testimonial[] = [
+  {
+    id: '1',
+    name: 'Ritika Sharma',
+    text: 'Joining Salsawala Studios was the best decision I ever made! Hitesh sir is an amazing teacher — his patience and passion are contagious. I went from having two left feet to performing at their annual showcase in just 6 months!',
+    rating: 5,
+    style: 'Salsa',
+    duration: '8 months',
+    avatarGradient: 'from-pink-500 to-rose-600',
+  },
+  {
+    id: '2',
+    name: 'Arjun Mehta',
+    text: 'Akash\'s Hip-Hop classes are absolutely fire! The energy in every session is unmatched. The studio has a great vibe and the community here is so welcoming. Best fitness decision I\'ve made.',
+    rating: 5,
+    style: 'Hip-Hop',
+    duration: '6 months',
+    avatarGradient: 'from-blue-500 to-indigo-600',
+  },
+  {
+    id: '3',
+    name: 'Sneha Banerjee',
+    text: 'Priyam ma\'am\'s Contemporary classes have changed my life. I discovered a side of myself I never knew existed. The studio feels like a second home — everyone is so supportive and encouraging.',
+    rating: 5,
+    style: 'Contemporary',
+    duration: '1 year',
+    avatarGradient: 'from-purple-500 to-violet-600',
+  },
+  {
+    id: '4',
+    name: 'Rohan Das',
+    text: 'I came here for fitness but stayed for the dance! The Bachata classes with Hitesh sir are so much fun. I\'ve made amazing friends here and the wooden floor is just perfect for dancing.',
+    rating: 5,
+    style: 'Bachata',
+    duration: '5 months',
+    avatarGradient: 'from-green-500 to-emerald-600',
+  },
+  {
+    id: '5',
+    name: 'Priya Kapoor',
+    text: 'The Pilates classes are fantastic for core strength. Priyam ma\'am really understands body mechanics and helps you improve without injury. Great studio, great instructors, great community!',
+    rating: 5,
+    style: 'Pilates',
+    duration: '4 months',
+    avatarGradient: 'from-orange-500 to-amber-600',
+  },
+  {
+    id: '6',
+    name: 'Vikram Singh',
+    text: 'Salsawala Studios is the real deal. The Kizomba sessions are intimate and beautifully taught. The studio space is world-class — great mirrors, sound system, and AC. Highly recommended!',
+    rating: 5,
+    style: 'Kizomba',
+    duration: '7 months',
+    avatarGradient: 'from-teal-500 to-cyan-600',
+  },
+]
