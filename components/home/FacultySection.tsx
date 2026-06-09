@@ -19,13 +19,12 @@ export function FacultySection() {
           {instructors.map(instructor => (
             <div
               key={instructor.id}
-              className="group bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
+              className="group bg-white border border-dark-border rounded-3xl overflow-hidden hover:border-primary/50 hover:-translate-y-1 hover:shadow-card transition-all duration-300"
             >
-              {/* Avatar */}
+              {/* Avatar — keep dark gradient for visual contrast */}
               <div className={`relative h-56 bg-gradient-to-br ${instructor.photoGradient} flex items-end justify-start p-6 overflow-hidden`}>
-                {/* Decorative circles */}
-                <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-white/5 translate-y-1/2 -translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/10 -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-white/10 translate-y-1/2 -translate-x-1/2" />
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
@@ -44,9 +43,9 @@ export function FacultySection() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="font-display text-xl font-bold text-white mb-0.5">{instructor.name}</h3>
-                <p className="font-body text-sm text-primary mb-3">{instructor.title}</p>
-                <p className="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-3">
+                <h3 className="font-display text-xl font-bold text-ink mb-0.5">{instructor.name}</h3>
+                <p className="font-body text-sm text-primary-dark mb-3">{instructor.title}</p>
+                <p className="font-body text-sm text-ink/50 leading-relaxed mb-4 line-clamp-3">
                   {instructor.bio}
                 </p>
 
@@ -66,7 +65,7 @@ export function FacultySection() {
                       href={instructor.social.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-8 w-8 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center text-white/50 hover:text-primary hover:border-primary/40 transition-all"
+                      className="h-8 w-8 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center text-ink/50 hover:text-primary-dark hover:border-primary/50 transition-all"
                     >
                       <Instagram className="h-3.5 w-3.5" />
                     </a>
@@ -76,14 +75,14 @@ export function FacultySection() {
                       href={instructor.social.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-8 w-8 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center text-white/50 hover:text-primary hover:border-primary/40 transition-all"
+                      className="h-8 w-8 rounded-full bg-dark-surface border border-dark-border flex items-center justify-center text-ink/50 hover:text-primary-dark hover:border-primary/50 transition-all"
                     >
                       <Facebook className="h-3.5 w-3.5" />
                     </a>
                   )}
                   <Link
                     href="/classes"
-                    className="ml-auto text-xs font-body text-primary hover:text-primary-light transition-colors"
+                    className="ml-auto text-xs font-body text-primary-dark hover:text-primary-600 transition-colors"
                   >
                     View Classes →
                   </Link>

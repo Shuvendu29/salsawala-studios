@@ -9,12 +9,12 @@ interface BadgeProps {
 
 export function Badge({ children, variant = 'primary', className }: BadgeProps) {
   const variants = {
-    primary: 'bg-primary/20 text-primary border border-primary/30',
-    gold: 'bg-gold/20 text-gold border border-gold/30',
-    outline: 'bg-transparent text-white border border-dark-border',
-    success: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
-    warning: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
-    danger: 'bg-red-500/20 text-red-400 border border-red-500/30',
+    primary: 'bg-primary/20 text-primary-700 border border-primary/40',
+    gold: 'bg-gold/20 text-gold-dark border border-gold/40',
+    outline: 'bg-white/80 text-ink border border-dark-border',
+    success: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
+    warning: 'bg-amber-100 text-amber-700 border border-amber-200',
+    danger: 'bg-red-100 text-red-700 border border-red-200',
   }
 
   return (

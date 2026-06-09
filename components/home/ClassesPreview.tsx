@@ -6,15 +6,15 @@ import { Button } from '@/components/ui/Button'
 import { weeklySchedule } from '@/lib/data/classes'
 
 const styleColors: Record<string, string> = {
-  Salsa: 'from-red-600 to-orange-500',
-  Bachata: 'from-rose-700 to-pink-500',
-  'Hip-Hop': 'from-blue-700 to-cyan-500',
-  Contemporary: 'from-teal-600 to-emerald-500',
-  Bollywood: 'from-yellow-600 to-orange-400',
-  Kizomba: 'from-purple-700 to-violet-500',
-  Pilates: 'from-green-700 to-lime-500',
-  'Salsa Social': 'from-red-600 to-rose-700',
-  Zumba: 'from-indigo-600 to-purple-500',
+  Salsa: 'from-red-400 to-orange-400',
+  Bachata: 'from-rose-400 to-pink-400',
+  'Hip-Hop': 'from-blue-400 to-cyan-400',
+  Contemporary: 'from-teal-400 to-emerald-400',
+  Bollywood: 'from-yellow-400 to-orange-300',
+  Kizomba: 'from-purple-400 to-violet-400',
+  Pilates: 'from-green-400 to-lime-400',
+  'Salsa Social': 'from-red-400 to-rose-400',
+  Zumba: 'from-indigo-400 to-purple-400',
 }
 
 const levelColors: Record<string, 'success' | 'warning' | 'primary' | 'outline' | 'danger'> = {
@@ -49,12 +49,12 @@ export function ClassesPreview() {
             const spotsLeft = cls.spots
             const isFull = spotsLeft === 0
             const isAlmostFull = spotsLeft <= 3 && spotsLeft > 0
-            const gradient = styleColors[cls.style] || 'from-gray-700 to-gray-500'
+            const gradient = styleColors[cls.style] || 'from-violet-400 to-purple-400'
 
             return (
               <div
                 key={cls.id}
-                className="bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:border-primary/30 hover:-translate-y-0.5 transition-all duration-300 group"
+                className="bg-white border border-dark-border rounded-2xl overflow-hidden hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-card transition-all duration-300 group"
               >
                 {/* Top color strip */}
                 <div className={`h-1.5 bg-gradient-to-r ${gradient}`} />
@@ -62,15 +62,15 @@ export function ClassesPreview() {
                 <div className="p-5">
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h3 className="font-display text-lg font-bold text-white group-hover:text-primary transition-colors">
+                      <h3 className="font-display text-lg font-bold text-ink group-hover:text-primary-dark transition-colors">
                         {cls.style}
                       </h3>
-                      <p className="font-body text-sm text-white/50 mt-0.5">{cls.instructor.split(' ')[0]}</p>
+                      <p className="font-body text-sm text-ink/50 mt-0.5">{cls.instructor.split(' ')[0]}</p>
                     </div>
                     <div className="flex flex-col items-end gap-1.5">
                       <Badge variant={levelColors[cls.level] || 'outline'}>{cls.level}</Badge>
                       {cls.isOnline && (
-                        <span className="flex items-center gap-1 text-xs text-cyan-400">
+                        <span className="flex items-center gap-1 text-xs text-cyan-600">
                           <Wifi className="h-3 w-3" /> Online
                         </span>
                       )}
@@ -78,17 +78,17 @@ export function ClassesPreview() {
                   </div>
 
                   <div className="space-y-2.5 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-white/60 font-body">
-                      <Calendar className="h-3.5 w-3.5 text-primary" />
+                    <div className="flex items-center gap-2 text-sm text-ink/60 font-body">
+                      <Calendar className="h-3.5 w-3.5 text-primary-dark" />
                       {cls.day}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-white/60 font-body">
-                      <Clock className="h-3.5 w-3.5 text-primary" />
+                    <div className="flex items-center gap-2 text-sm text-ink/60 font-body">
+                      <Clock className="h-3.5 w-3.5 text-primary-dark" />
                       {cls.time} · {cls.duration}
                     </div>
                     <div className="flex items-center gap-2 text-sm font-body">
-                      <Users className="h-3.5 w-3.5 text-primary" />
-                      <span className={isFull ? 'text-red-400' : isAlmostFull ? 'text-amber-400' : 'text-white/60'}>
+                      <Users className="h-3.5 w-3.5 text-primary-dark" />
+                      <span className={isFull ? 'text-red-500' : isAlmostFull ? 'text-amber-500' : 'text-ink/60'}>
                         {isFull ? 'Class Full' : `${spotsLeft} spots left`}
                       </span>
                     </div>
@@ -103,9 +103,9 @@ export function ClassesPreview() {
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="font-display font-bold text-white">
+                    <span className="font-display font-bold text-ink">
                       ₹{cls.price.toLocaleString()}
-                      <span className="text-xs text-white/40 font-body font-normal">/class</span>
+                      <span className="text-xs text-ink/40 font-body font-normal">/class</span>
                     </span>
                     <Link href={`/classes?book=${cls.id}`}>
                       <Button size="sm" disabled={isFull} variant={isFull ? 'secondary' : 'primary'}>

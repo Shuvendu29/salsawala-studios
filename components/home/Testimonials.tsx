@@ -17,19 +17,19 @@ export function Testimonials() {
           {testimonials.map(t => (
             <div
               key={t.id}
-              className="bg-dark-card border border-dark-border rounded-2xl p-6 hover:border-gold/30 hover:-translate-y-0.5 transition-all duration-300 group relative overflow-hidden"
+              className="bg-white border border-dark-border rounded-2xl p-6 hover:border-gold/60 hover:-translate-y-0.5 hover:shadow-card transition-all duration-300 group relative overflow-hidden"
             >
-              <Quote className="absolute top-4 right-4 h-10 w-10 text-primary/10 group-hover:text-primary/20 transition-colors" />
+              <Quote className="absolute top-4 right-4 h-10 w-10 text-primary/15 group-hover:text-primary/30 transition-colors" />
 
               {/* Stars */}
               <div className="flex gap-0.5 mb-4">
                 {[...Array(t.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 text-gold fill-gold" />
+                  <Star key={i} className="h-4 w-4 text-gold-dark fill-gold-dark" />
                 ))}
               </div>
 
               {/* Text */}
-              <p className="font-body text-sm text-white/70 leading-relaxed mb-6 italic">
+              <p className="font-body text-sm text-ink/70 leading-relaxed mb-6 italic">
                 &ldquo;{t.text}&rdquo;
               </p>
 
@@ -41,8 +41,8 @@ export function Testimonials() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-body text-sm font-semibold text-white">{t.name}</p>
-                  <p className="font-body text-xs text-white/40">
+                  <p className="font-body text-sm font-semibold text-ink">{t.name}</p>
+                  <p className="font-body text-xs text-ink/40">
                     {t.style} · {t.duration}
                   </p>
                 </div>

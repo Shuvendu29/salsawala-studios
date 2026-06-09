@@ -39,9 +39,9 @@ export function UpcomingEvents() {
             return (
               <div
                 key={event.id}
-                className="group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:border-primary/30 hover:-translate-y-0.5 transition-all duration-300"
+                className="group bg-white border border-dark-border rounded-2xl overflow-hidden hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-card transition-all duration-300"
               >
-                {/* Header gradient */}
+                {/* Header gradient — keep dark for visual impact */}
                 <div className={`h-32 bg-gradient-to-br ${event.gradient} relative flex items-end p-5`}>
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="relative z-10">
@@ -59,25 +59,25 @@ export function UpcomingEvents() {
                 </div>
 
                 <div className="p-5">
-                  <h3 className="font-display text-lg font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                  <h3 className="font-display text-lg font-bold text-ink mb-1 group-hover:text-primary-dark transition-colors">
                     {event.title}
                   </h3>
-                  <p className="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">
+                  <p className="font-body text-sm text-ink/50 leading-relaxed mb-4 line-clamp-2">
                     {event.description}
                   </p>
 
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-white/50 font-body">
-                      <Calendar className="h-3.5 w-3.5 text-primary" />
+                    <div className="flex items-center gap-2 text-xs text-ink/50 font-body">
+                      <Calendar className="h-3.5 w-3.5 text-primary-dark" />
                       {event.time}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-white/50 font-body">
-                      <MapPin className="h-3.5 w-3.5 text-primary" />
+                    <div className="flex items-center gap-2 text-xs text-ink/50 font-body">
+                      <MapPin className="h-3.5 w-3.5 text-primary-dark" />
                       {event.venue}
                     </div>
                     <div className="flex items-center gap-2 text-xs font-body">
-                      <Users className="h-3.5 w-3.5 text-primary" />
-                      <span className={spotsLeft < 10 ? 'text-amber-400' : 'text-white/50'}>
+                      <Users className="h-3.5 w-3.5 text-primary-dark" />
+                      <span className={spotsLeft < 10 ? 'text-amber-500' : 'text-ink/50'}>
                         {spotsLeft} spots remaining
                       </span>
                     </div>
@@ -85,10 +85,10 @@ export function UpcomingEvents() {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="font-display font-bold text-white text-lg">
+                      <span className="font-display font-bold text-ink text-lg">
                         {event.price === 0 ? 'FREE' : `₹${event.price.toLocaleString()}`}
                       </span>
-                      {event.price > 0 && <span className="text-xs text-white/40 font-body">/person</span>}
+                      {event.price > 0 && <span className="text-xs text-ink/40 font-body">/person</span>}
                     </div>
                     <Link href={`/events/${event.id}`}>
                       <Button size="sm">Register</Button>
