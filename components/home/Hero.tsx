@@ -64,7 +64,7 @@ export function Hero() {
             </Link>
             <Link href="/classes">
               <Button variant="outline" size="lg" className="w-full sm:w-auto group">
-                <Play className="h-4 w-4 mr-1 group-hover:text-white transition-colors" />
+                <Play className="h-4 w-4 mr-1 group-hover:text-ink transition-colors" />
                 Explore Classes
               </Button>
             </Link>

@@ -67,7 +67,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-dark text-white antialiased">
+      <body className="bg-dark text-ink antialiased">
         <Providers>
           <Navbar />
           <main>{children}</main>

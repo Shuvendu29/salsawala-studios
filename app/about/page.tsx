@@ -31,14 +31,14 @@ export default function AboutPage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative py-24 bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(196,30,58,0.12),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(189,178,255,0.15),transparent)]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Badge variant="primary" className="mb-6">Our Story</Badge>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-ink mb-6 leading-tight">
             Where Every Beat Tells{' '}
             <span className="bg-crimson-gradient bg-clip-text text-transparent">a Story</span>
           </h1>
-          <p className="font-body text-xl text-white/60 leading-relaxed max-w-2xl mx-auto">
+          <p className="font-body text-xl text-ink/60 leading-relaxed max-w-2xl mx-auto">
             Born from a deep love for Latin dance, Salsawala Studios has been Kolkata&apos;s heartbeat for dance and movement since 2014. We&apos;re not just a dance school — we&apos;re a movement.
           </p>
         </div>
@@ -50,27 +50,27 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <Badge variant="gold" className="mb-4">Our Mission</Badge>
-              <h2 className="font-display text-4xl font-bold text-white mb-6">
+              <h2 className="font-display text-4xl font-bold text-ink mb-6">
                 Making Dance Accessible to{' '}
                 <span className="bg-crimson-gradient bg-clip-text text-transparent">Everyone</span>
               </h2>
-              <p className="font-body text-white/60 leading-relaxed mb-6">
+              <p className="font-body text-ink/60 leading-relaxed mb-6">
                 Salsawala Studios was founded on the belief that dance is for everybody. Not just the naturally talented — but for anyone who wants to move, express, and connect. Our founder Hitesh H. Teckchandani, known as &quot;The Salsawala,&quot; built this studio from the ground up with one simple goal: to bring the joy of Latin dance to Kolkata.
               </p>
-              <p className="font-body text-white/60 leading-relaxed mb-8">
+              <p className="font-body text-ink/60 leading-relaxed mb-8">
                 From a small beginner class to a thriving community of 500+ dancers across 15+ styles, we&apos;ve grown into Kolkata&apos;s most loved dance destination — while staying true to our roots: great music, great teaching, and great company.
               </p>
               <div className="space-y-3">
                 {['World-class wooden dance floor', 'Professional mirror and sound system', 'Air-conditioned and well-ventilated space', 'Flexible batch timings', 'Online & in-studio options'].map(f => (
                   <div key={f} className="flex items-center gap-2.5">
-                    <CheckCircle className="h-4 w-4 text-primary shrink-0" />
-                    <span className="font-body text-sm text-white/70">{f}</span>
+                    <CheckCircle className="h-4 w-4 text-primary-dark shrink-0" />
+                    <span className="font-body text-sm text-ink/70">{f}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Visual */}
+            {/* Visual — dark gradient boxes, keep text-white */}
             <div className="grid grid-cols-2 gap-4">
               {[
                 { gradient: 'from-red-900 to-orange-700', label: 'Studio Space', sub: 'Premium wooden floor' },
@@ -96,7 +96,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <Badge className="mb-4">What We Stand For</Badge>
-            <h2 className="font-display text-4xl font-bold text-white">
+            <h2 className="font-display text-4xl font-bold text-ink">
               Our <span className="bg-crimson-gradient bg-clip-text text-transparent">Core Values</span>
             </h2>
           </div>
@@ -104,10 +104,10 @@ export default function AboutPage() {
             {values.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="bg-dark-card border border-dark-border rounded-2xl p-6 hover:border-primary/30 transition-all">
                 <div className="h-12 w-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
-                  <Icon className="h-6 w-6 text-primary" />
+                  <Icon className="h-6 w-6 text-primary-dark" />
                 </div>
-                <h3 className="font-display text-lg font-bold text-white mb-2">{title}</h3>
-                <p className="font-body text-sm text-white/50 leading-relaxed">{desc}</p>
+                <h3 className="font-display text-lg font-bold text-ink mb-2">{title}</h3>
+                <p className="font-body text-sm text-ink/60 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -119,13 +119,14 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <Badge variant="gold" className="mb-4">The Team</Badge>
-            <h2 className="font-display text-4xl font-bold text-white">
+            <h2 className="font-display text-4xl font-bold text-ink">
               Meet Our <span className="bg-crimson-gradient bg-clip-text text-transparent">Faculty</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {instructors.map(instructor => (
               <div key={instructor.id} className="bg-dark-card border border-dark-border rounded-3xl overflow-hidden">
+                {/* Photo area — dark gradient, keep text-white */}
                 <div className={`h-48 bg-gradient-to-br ${instructor.photoGradient} flex items-center justify-center relative`}>
                   <div className="h-20 w-20 rounded-full bg-white/20 border-2 border-white/30 flex items-center justify-center">
                     <span className="font-display text-3xl font-bold text-white">{instructor.name.charAt(0)}</span>
@@ -135,9 +136,9 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-display text-xl font-bold text-white">{instructor.name}</h3>
-                  <p className="text-primary text-sm font-body mb-3">{instructor.title}</p>
-                  <p className="font-body text-sm text-white/50 leading-relaxed mb-4">{instructor.bio}</p>
+                  <h3 className="font-display text-xl font-bold text-ink">{instructor.name}</h3>
+                  <p className="text-primary-dark text-sm font-body mb-3">{instructor.title}</p>
+                  <p className="font-body text-sm text-ink/60 leading-relaxed mb-4">{instructor.bio}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {instructor.styles.map(s => (
                       <Badge key={s} variant="outline" className="text-[10px]">{s}</Badge>
@@ -155,20 +156,20 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <Badge className="mb-4">Our Journey</Badge>
-            <h2 className="font-display text-4xl font-bold text-white">
+            <h2 className="font-display text-4xl font-bold text-ink">
               A Decade of <span className="bg-crimson-gradient bg-clip-text text-transparent">Dance</span>
             </h2>
           </div>
           <div className="relative">
             <div className="absolute left-8 top-0 bottom-0 w-px bg-dark-border" />
             <div className="space-y-8">
-              {milestones.map((m, i) => (
+              {milestones.map((m) => (
                 <div key={m.year} className="relative flex gap-6 items-start">
                   <div className="relative z-10 h-16 w-16 rounded-full bg-primary/10 border-2 border-primary/30 flex flex-col items-center justify-center shrink-0">
-                    <span className="font-display text-sm font-bold text-primary leading-none">{m.year}</span>
+                    <span className="font-display text-sm font-bold text-primary-dark leading-none">{m.year}</span>
                   </div>
                   <div className="flex-1 pt-4">
-                    <p className="font-body text-white/70 leading-relaxed">{m.event}</p>
+                    <p className="font-body text-ink/70 leading-relaxed">{m.event}</p>
                   </div>
                 </div>
               ))}
@@ -180,10 +181,10 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-20 bg-dark-surface">
         <div className="max-w-xl mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl font-bold text-white mb-4">
+          <h2 className="font-display text-3xl font-bold text-ink mb-4">
             Be Part of Our Story
           </h2>
-          <p className="font-body text-white/60 mb-8">
+          <p className="font-body text-ink/60 mb-8">
             Join the Salsawala family. Your first class is free.
           </p>
           <div className="flex gap-4 justify-center">

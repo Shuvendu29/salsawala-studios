@@ -17,7 +17,7 @@ export function PageLoader() {
     <div className="min-h-screen bg-dark flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <LoadingSpinner size="lg" />
-        <p className="text-white/60 text-sm font-body animate-pulse">Loading…</p>
+        <p className="text-ink/60 text-sm font-body animate-pulse">Loading…</p>
       </div>
     </div>
   )

@@ -22,14 +22,14 @@ export default function EventsPage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative py-20 bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(212,175,55,0.1),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(255,200,221,0.2),transparent)]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Badge variant="gold" className="mb-6">Events & Workshops</Badge>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-white mb-6">
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-ink mb-6">
             Dance Events That{' '}
             <span className="bg-gold-gradient bg-clip-text text-transparent">Move You</span>
           </h1>
-          <p className="font-body text-xl text-white/60 leading-relaxed">
+          <p className="font-body text-xl text-ink/60 leading-relaxed">
             From intensive workshops to social dance nights — there&apos;s always something exciting at Salsawala Studios.
           </p>
         </div>
@@ -45,7 +45,7 @@ export default function EventsPage() {
               const pctFull = (event.enrolled / event.capacity) * 100
               return (
                 <div key={event.id} className="group bg-dark-card border border-dark-border rounded-3xl overflow-hidden hover:border-primary/30 hover:-translate-y-1 transition-all duration-300">
-                  {/* Header */}
+                  {/* Dark gradient header — keep text-white */}
                   <div className={`relative h-48 bg-gradient-to-br ${event.gradient} flex items-end p-6`}>
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="relative z-10 flex items-end justify-between w-full">
@@ -58,19 +58,19 @@ export default function EventsPage() {
                   </div>
 
                   <div className="p-6">
-                    <h3 className="font-display text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">{event.title}</h3>
-                    <p className="font-body text-white/60 leading-relaxed mb-5">{event.description}</p>
+                    <h3 className="font-display text-2xl font-bold text-ink mb-2 group-hover:text-primary-dark transition-colors">{event.title}</h3>
+                    <p className="font-body text-ink/60 leading-relaxed mb-5">{event.description}</p>
 
                     <div className="space-y-2.5 mb-5">
-                      <div className="flex items-center gap-2 text-sm text-white/50 font-body">
-                        <Clock className="h-4 w-4 text-primary" />{event.time}
+                      <div className="flex items-center gap-2 text-sm text-ink/50 font-body">
+                        <Clock className="h-4 w-4 text-primary-dark" />{event.time}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-white/50 font-body">
-                        <MapPin className="h-4 w-4 text-primary" />{event.venue}
+                      <div className="flex items-center gap-2 text-sm text-ink/50 font-body">
+                        <MapPin className="h-4 w-4 text-primary-dark" />{event.venue}
                       </div>
                       <div className="flex items-center gap-2 text-sm font-body">
-                        <Users className="h-4 w-4 text-primary" />
-                        <span className={spotsLeft < 15 ? 'text-amber-400' : 'text-white/50'}>
+                        <Users className="h-4 w-4 text-primary-dark" />
+                        <span className={spotsLeft < 15 ? 'text-amber-500' : 'text-ink/50'}>
                           {spotsLeft} of {event.capacity} spots remaining
                         </span>
                       </div>
@@ -86,10 +86,10 @@ export default function EventsPage() {
 
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="font-display text-2xl font-bold text-white">
+                        <span className="font-display text-2xl font-bold text-ink">
                           {event.price === 0 ? 'FREE' : `₹${event.price.toLocaleString()}`}
                         </span>
-                        {event.price > 0 && <span className="text-sm text-white/40 font-body ml-1">/person</span>}
+                        {event.price > 0 && <span className="text-sm text-ink/50 font-body ml-1">/person</span>}
                       </div>
                       <Button size="md">Register Now <ArrowRight className="h-4 w-4" /></Button>
                     </div>
@@ -104,8 +104,8 @@ export default function EventsPage() {
       {/* Host an event CTA */}
       <section className="py-16 bg-dark">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl font-bold text-white mb-4">Want to Host a Private Event?</h2>
-          <p className="font-body text-white/60 mb-8">
+          <h2 className="font-display text-3xl font-bold text-ink mb-4">Want to Host a Private Event?</h2>
+          <p className="font-body text-ink/60 mb-8">
             Corporate team-building, bachelorette parties, birthday celebrations, private workshops — we&apos;ve done it all. Our team will create a custom experience for your group.
           </p>
           <Link href="/contact"><Button size="lg">Get in Touch <ArrowRight className="h-4 w-4" /></Button></Link>

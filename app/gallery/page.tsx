@@ -28,14 +28,14 @@ export default function GalleryPage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative py-20 bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(196,30,58,0.1),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(189,178,255,0.15),transparent)]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Badge variant="primary" className="mb-6">Gallery</Badge>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-white mb-6">
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-ink mb-6">
             Life at{' '}
             <span className="bg-crimson-gradient bg-clip-text text-transparent">Salsawala</span>
           </h1>
-          <p className="font-body text-xl text-white/60 leading-relaxed">
+          <p className="font-body text-xl text-ink/60 leading-relaxed">
             A glimpse into the energy, community, and passion that defines every moment at Salsawala Studios.
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function GalleryPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
             {categories.map(cat => (
-              <button key={cat} className="shrink-0 px-4 py-1.5 rounded-full text-sm font-body border border-dark-border text-white/60 hover:text-white hover:border-primary/40 transition-all first:bg-primary first:text-white first:border-primary">
+              <button key={cat} className="shrink-0 px-4 py-1.5 rounded-full text-sm font-body border border-dark-border text-ink/60 hover:text-ink hover:border-primary/40 transition-all first:bg-primary first:text-ink first:border-primary">
                 {cat}
               </button>
             ))}
@@ -54,7 +54,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Gallery grid */}
+      {/* Gallery grid — items are on dark gradients, keep text-white inside */}
       <section className="py-10 bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[180px]">
@@ -77,7 +77,7 @@ export default function GalleryPage() {
               </div>
             ))}
           </div>
-          <p className="text-center text-white/30 text-sm font-body mt-8">
+          <p className="text-center text-ink/40 text-sm font-body mt-8">
             Actual photos will be loaded from Firebase Storage. Replace with real studio images.
           </p>
         </div>
@@ -86,8 +86,8 @@ export default function GalleryPage() {
       {/* Instagram CTA */}
       <section className="py-16 bg-dark-surface">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl font-bold text-white mb-4">Follow Us on Instagram</h2>
-          <p className="font-body text-white/60 mb-6">
+          <h2 className="font-display text-3xl font-bold text-ink mb-4">Follow Us on Instagram</h2>
+          <p className="font-body text-ink/60 mb-6">
             See the latest from our studio — classes, events, reels, and more @salsawalastudios
           </p>
           <a

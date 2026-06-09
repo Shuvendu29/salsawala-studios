@@ -99,7 +99,7 @@ export function Navbar() {
                   onClick={() => setProfileOpen(p => !p)}
                   className="flex items-center gap-2 px-3 py-2 rounded-full bg-dark-surface border border-dark-border hover:border-primary/60 transition-all"
                 >
-                  <div className="h-7 w-7 rounded-full bg-crimson-gradient flex items-center justify-center text-white text-xs font-bold">
+                  <div className="h-7 w-7 rounded-full bg-crimson-gradient flex items-center justify-center text-ink text-xs font-bold">
                     {profile?.displayName?.charAt(0).toUpperCase() || 'U'}
                   </div>
                   <span className="text-sm text-ink/80 max-w-[100px] truncate">

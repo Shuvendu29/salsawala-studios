@@ -56,11 +56,11 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex flex-col items-center leading-none">
-            <span className="font-display text-3xl font-bold text-white">SALSAWALA</span>
-            <span className="font-body text-[9px] tracking-[0.3em] text-gold uppercase mt-0.5">Studios • Kolkata</span>
+            <span className="font-display text-3xl font-bold text-ink">SALSAWALA</span>
+            <span className="font-body text-[9px] tracking-[0.3em] text-primary-dark uppercase mt-0.5">Studios • Kolkata</span>
           </Link>
-          <h1 className="font-display text-2xl font-bold text-white mt-6 mb-1">Welcome back</h1>
-          <p className="font-body text-sm text-white/50">Sign in to your account</p>
+          <h1 className="font-display text-2xl font-bold text-ink mt-6 mb-1">Welcome back</h1>
+          <p className="font-body text-sm text-ink/60">Sign in to your account</p>
         </div>
 
         <div className="bg-dark-card border border-dark-border rounded-3xl p-8">
@@ -82,43 +82,43 @@ export default function LoginPage() {
 
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-dark-border" /></div>
-            <div className="relative flex justify-center"><span className="bg-dark-card px-3 text-xs text-white/30 font-body">or continue with email</span></div>
+            <div className="relative flex justify-center"><span className="bg-dark-card px-3 text-xs text-ink/40 font-body">or continue with email</span></div>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm text-white/60 font-body mb-1.5">Email address</label>
+              <label className="block text-sm text-ink/70 font-body mb-1.5">Email address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/40" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full bg-dark-surface border border-dark-border rounded-xl pl-10 pr-4 py-3 text-white placeholder-white/30 font-body text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full bg-dark-surface border border-dark-border rounded-xl pl-10 pr-4 py-3 text-ink placeholder-ink/30 font-body text-sm focus:outline-none focus:border-primary/60 transition-colors"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex justify-between mb-1.5">
-                <label className="text-sm text-white/60 font-body">Password</label>
-                <Link href="/forgot-password" className="text-xs text-primary hover:text-primary-light font-body transition-colors">
+                <label className="text-sm text-ink/70 font-body">Password</label>
+                <Link href="/forgot-password" className="text-xs text-primary-dark hover:text-primary font-body transition-colors">
                   Forgot password?
                 </Link>
               </div>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/40" />
                 <input
                   type={showPwd ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-dark-surface border border-dark-border rounded-xl pl-10 pr-10 py-3 text-white placeholder-white/30 font-body text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full bg-dark-surface border border-dark-border rounded-xl pl-10 pr-10 py-3 text-ink placeholder-ink/30 font-body text-sm focus:outline-none focus:border-primary/60 transition-colors"
                 />
-                <button type="button" onClick={() => setShowPwd(p => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60">
+                <button type="button" onClick={() => setShowPwd(p => !p)} className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/40 hover:text-ink/70">
                   {showPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
@@ -127,9 +127,9 @@ export default function LoginPage() {
             <Button type="submit" loading={loading} className="w-full mt-2">Sign In</Button>
           </form>
 
-          <p className="text-center text-sm text-white/40 font-body mt-6">
+          <p className="text-center text-sm text-ink/50 font-body mt-6">
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="text-primary hover:text-primary-light transition-colors">
+            <Link href="/register" className="text-primary-dark hover:text-primary font-semibold transition-colors">
               Sign up free
             </Link>
           </p>

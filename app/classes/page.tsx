@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Clock, Users, Filter, ArrowRight, Wifi } from 'lucide-react'
+import { Clock, Users, ArrowRight, Wifi } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { danceStyles } from '@/lib/data/danceStyles'
@@ -35,14 +35,14 @@ export default function ClassesPage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative py-20 bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(196,30,58,0.12),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(189,178,255,0.15),transparent)]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Badge variant="primary" className="mb-6">Weekly Schedule</Badge>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-white mb-6">
+          <h1 className="font-display text-5xl sm:text-6xl font-bold text-ink mb-6">
             Find Your{' '}
             <span className="bg-crimson-gradient bg-clip-text text-transparent">Perfect Class</span>
           </h1>
-          <p className="font-body text-xl text-white/60 leading-relaxed">
+          <p className="font-body text-xl text-ink/60 leading-relaxed">
             15+ dance styles, flexible timings, all levels welcome. Book your spot and start dancing today.
           </p>
         </div>
@@ -51,8 +51,8 @@ export default function ClassesPage() {
       {/* Dance Styles Grid */}
       <section className="py-16 bg-dark-surface" id="styles">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl font-bold text-white mb-8">
-            All Dance <span className="text-primary">Styles</span>
+          <h2 className="font-display text-3xl font-bold text-ink mb-8">
+            All Dance <span className="text-primary-dark">Styles</span>
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
             {danceStyles.map(style => (
@@ -62,8 +62,8 @@ export default function ClassesPage() {
                 className="group bg-dark-card border border-dark-border rounded-xl p-4 hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-200 text-center"
               >
                 <div className="text-2xl mb-2">{style.icon}</div>
-                <div className="font-display text-sm font-bold text-white group-hover:text-primary transition-colors">{style.name}</div>
-                <div className="font-body text-xs text-white/40 mt-0.5">{style.level}</div>
+                <div className="font-display text-sm font-bold text-ink group-hover:text-primary-dark transition-colors">{style.name}</div>
+                <div className="font-body text-xs text-ink/50 mt-0.5">{style.level}</div>
               </a>
             ))}
           </div>
@@ -74,8 +74,8 @@ export default function ClassesPage() {
       <section className="py-16 bg-dark" id="schedule">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="font-display text-3xl font-bold text-white">
-              Weekly <span className="text-primary">Schedule</span>
+            <h2 className="font-display text-3xl font-bold text-ink">
+              Weekly <span className="text-primary-dark">Schedule</span>
             </h2>
           </div>
 
@@ -86,9 +86,9 @@ export default function ClassesPage() {
               <div key={day} className="mb-10">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-8 w-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <span className="text-primary text-xs font-bold">{day.slice(0, 2)}</span>
+                    <span className="text-primary-dark text-xs font-bold">{day.slice(0, 2)}</span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-white">{day}</h3>
+                  <h3 className="font-display text-xl font-semibold text-ink">{day}</h3>
                   <div className="flex-1 h-px bg-dark-border" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -101,26 +101,26 @@ export default function ClassesPage() {
                         <div className="p-5">
                           <div className="flex justify-between items-start mb-3">
                             <div>
-                              <h4 className="font-display text-lg font-bold text-white group-hover:text-primary transition-colors">{cls.style}</h4>
-                              <p className="text-sm text-white/50 font-body">{cls.instructor}</p>
+                              <h4 className="font-display text-lg font-bold text-ink group-hover:text-primary-dark transition-colors">{cls.style}</h4>
+                              <p className="text-sm text-ink/50 font-body">{cls.instructor}</p>
                             </div>
                             <div className="flex flex-col items-end gap-1.5">
                               <Badge variant={levelBadge[cls.level] || 'outline'}>{cls.level}</Badge>
-                              {cls.isOnline && <span className="flex items-center gap-1 text-xs text-cyan-400"><Wifi className="h-3 w-3" />Online</span>}
+                              {cls.isOnline && <span className="flex items-center gap-1 text-xs text-cyan-500"><Wifi className="h-3 w-3" />Online</span>}
                             </div>
                           </div>
-                          <div className="flex gap-4 text-sm text-white/50 font-body mb-4">
-                            <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 text-primary" />{cls.time}</span>
+                          <div className="flex gap-4 text-sm text-ink/50 font-body mb-4">
+                            <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 text-primary-dark" />{cls.time}</span>
                             <span>{cls.duration}</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm font-body mb-4">
-                            <Users className="h-3.5 w-3.5 text-primary" />
-                            <span className={isFull ? 'text-red-400' : cls.spots <= 3 ? 'text-amber-400' : 'text-white/50'}>
+                            <Users className="h-3.5 w-3.5 text-primary-dark" />
+                            <span className={isFull ? 'text-red-500' : cls.spots <= 3 ? 'text-amber-500' : 'text-ink/50'}>
                               {isFull ? 'Full' : `${cls.spots} spots left`}
                             </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="font-display font-bold text-white">₹{cls.price.toLocaleString()}<span className="text-xs text-white/40 font-body font-normal">/class</span></span>
+                            <span className="font-display font-bold text-ink">₹{cls.price.toLocaleString()}<span className="text-xs text-ink/40 font-body font-normal">/class</span></span>
                             <Link href={`/register?class=${cls.id}`}>
                               <Button size="sm" disabled={isFull}>{isFull ? 'Full' : 'Book Now'}</Button>
                             </Link>
@@ -139,8 +139,8 @@ export default function ClassesPage() {
       {/* Pricing note */}
       <section className="py-16 bg-dark-surface">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="font-display text-3xl font-bold text-white mb-4">Flexible Pricing</h2>
-          <p className="font-body text-white/60 mb-8">
+          <h2 className="font-display text-3xl font-bold text-ink mb-4">Flexible Pricing</h2>
+          <p className="font-body text-ink/60 mb-8">
             Pay per class or ask about monthly packages for the best value. Corporate and group rates available on request.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -150,9 +150,9 @@ export default function ClassesPage() {
               { label: 'Unlimited', price: '₹4,500', sub: 'All classes · Best value' },
             ].map(p => (
               <div key={p.label} className="bg-dark-card border border-dark-border rounded-2xl p-5">
-                <div className="font-body text-sm text-white/50 mb-1">{p.label}</div>
-                <div className="font-display text-2xl font-bold text-white mb-1">{p.price}</div>
-                <div className="font-body text-xs text-white/40">{p.sub}</div>
+                <div className="font-body text-sm text-ink/60 mb-1">{p.label}</div>
+                <div className="font-display text-2xl font-bold text-ink mb-1">{p.price}</div>
+                <div className="font-body text-xs text-ink/50">{p.sub}</div>
               </div>
             ))}
           </div>

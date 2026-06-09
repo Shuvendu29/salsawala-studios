@@ -26,7 +26,7 @@ export function Button({
     secondary:
       'bg-white hover:bg-dark-hover text-ink border border-dark-border hover:border-primary focus:ring-primary',
     outline:
-      'bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
+      'bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-ink focus:ring-primary',
     ghost:
       'bg-transparent text-ink hover:bg-dark-surface focus:ring-primary',
     gold:
