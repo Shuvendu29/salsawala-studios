@@ -5,7 +5,8 @@
   "portsAttributes": {
     "3000": {
       "label": "Next.js App",
-      "onAutoForward": "openBrowser"
+      "onAutoForward": "openBrowser",
+      "visibility": "public"
     }
   },
   "postCreateCommand": "npm install --legacy-peer-deps",
