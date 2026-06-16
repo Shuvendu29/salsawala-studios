@@ -2,15 +2,16 @@ import { UserRole } from './types'
 
 interface MockCredential {
   username: string
+  email: string
   password: string
   role: UserRole
   displayName: string
 }
 
 const MOCK_CREDENTIALS: MockCredential[] = [
-  { username: 'admin',  password: 'admin1234', role: 'admin',   displayName: 'Admin'      },
-  { username: 'User',   password: 'User1234',  role: 'user',    displayName: 'User'       },
-  { username: 'Crew',   password: 'User1234',  role: 'faculty', displayName: 'Crew Member' },
+  { username: 'admin',  email: 'admin@mock.local',   password: 'admin1234',  role: 'admin',   displayName: 'Admin' },
+  { username: 'user',   email: 'user@mock.local',    password: 'user1234',   role: 'user',    displayName: 'Student User' },
+  { username: 'crew',   email: 'crew@mock.local',    password: 'crew1234',   role: 'faculty', displayName: 'Crew Member' },
 ]
 
 const SESSION_KEY = 'mock_auth_session'
@@ -21,9 +22,12 @@ export interface MockSession {
   displayName: string
 }
 
-export function checkMockCredentials(username: string, password: string): MockSession | null {
+export function checkMockCredentials(emailOrUsername: string, password: string): MockSession | null {
+  const input = emailOrUsername.trim().toLowerCase()
   const match = MOCK_CREDENTIALS.find(
-    c => c.username === username && c.password === password
+    c =>
+      (c.username === input || c.email === input) &&
+      c.password === password
   )
   if (!match) return null
   return { username: match.username, role: match.role, displayName: match.displayName }

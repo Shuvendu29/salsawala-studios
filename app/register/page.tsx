@@ -39,8 +39,8 @@ export default function RegisterPage() {
     setLoading(true)
     try {
       await registerWithEmail(form.email, form.password, form.name, form.phone)
-      toast.success('Welcome to Salsawala Studios!')
-      router.push('/dashboard')
+      toast.success('Account created! Let\'s complete your profile.')
+      router.push('/onboarding')
     } catch (err: any) {
       toast.error(err.message || 'Registration failed. Please try again.')
     } finally {
@@ -52,8 +52,8 @@ export default function RegisterPage() {
     setGoogleLoading(true)
     try {
       await loginWithGoogle()
-      toast.success('Welcome to Salsawala Studios!')
-      router.push('/dashboard')
+      toast.success('Signed in! Let\'s complete your profile.')
+      router.push('/onboarding')
     } catch (err: any) {
       toast.error(err.message || 'Google sign-in failed.')
     } finally {

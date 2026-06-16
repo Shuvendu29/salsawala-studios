@@ -157,11 +157,12 @@ export default function OnboardingPage() {
         await updateUserProfile(user.uid, { registrationStatus: 'pending_approval' })
         toast.success('Registration submitted! Admin will approve after cash payment.')
       } else {
-        // In production: initiate Razorpay here
-        // For now simulate success
+        // TODO: integrate Razorpay payment gateway here before go-live
+        const expiry = new Date()
+        expiry.setMonth(expiry.getMonth() + (config.validityMonths || 12))
         await updateUserProfile(user.uid, {
           registrationStatus: 'active',
-          registrationExpiry: undefined, // set after payment webhook
+          registrationExpiry: expiry as any,
         })
         toast.success('Payment successful! Welcome to Salsawala Studios!')
       }
