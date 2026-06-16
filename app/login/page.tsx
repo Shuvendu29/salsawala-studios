@@ -3,14 +3,15 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { Eye, EyeOff, User, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { loginWithEmail, loginWithGoogle } from '@/lib/firebase/auth'
 import { useAuth } from '@/lib/hooks/useAuth'
+import { checkMockCredentials, saveMockSession } from '@/lib/mock-auth'
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPwd, setShowPwd] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -22,7 +23,17 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     try {
-      await loginWithEmail(email, password)
+      // Try mock credentials first (testing mode)
+      const mockSession = checkMockCredentials(username, password)
+      if (mockSession) {
+        saveMockSession(mockSession)
+        toast.success(`Welcome, ${mockSession.displayName}!`)
+        const dest = mockSession.role === 'admin' ? '/admin' : mockSession.role === 'faculty' ? '/faculty' : '/dashboard'
+        router.push(dest)
+        return
+      }
+      // Fall back to Firebase auth (email login)
+      await loginWithEmail(username, password)
       toast.success('Welcome back!')
       redirectByRole()
     } catch (err: any) {
@@ -87,15 +98,15 @@ export default function LoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm text-ink/70 font-body mb-1.5">Email address</label>
+              <label className="block text-sm text-ink/70 font-body mb-1.5">Username or Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/40" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/40" />
                 <input
-                  type="email"
+                  type="text"
                   required
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  placeholder="Username or email address"
                   className="w-full bg-dark-surface border border-dark-border rounded-xl pl-10 pr-4 py-3 text-ink placeholder-ink/30 font-body text-sm focus:outline-none focus:border-primary/60 transition-colors"
                 />
               </div>

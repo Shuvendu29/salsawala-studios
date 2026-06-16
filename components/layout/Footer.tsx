@@ -131,7 +131,7 @@ export function Footer() {
             © {new Date().getFullYear()} Salsawala Studios. All rights reserved.
           </p>
           <p className="text-ink/30 text-xs font-body flex items-center gap-1">
-            Made with <Heart className="h-3 w-3 text-gold-dark fill-gold-dark" /> in Kolkata
+            Made with <Heart className="h-3 w-3 text-gold-dark fill-gold-dark" /> by Shuvendu
           </p>
         </div>
       </div>

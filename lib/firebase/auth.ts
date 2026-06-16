@@ -11,6 +11,7 @@ import {
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db } from './config'
 import { UserProfile, UserRole } from '../types'
+import { clearMockSession, getMockSession } from '../mock-auth'
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -41,6 +42,10 @@ export async function loginWithGoogle(): Promise<User> {
 }
 
 export async function logout(): Promise<void> {
+  if (getMockSession()) {
+    clearMockSession()
+    return
+  }
   await signOut(auth)
 }
 

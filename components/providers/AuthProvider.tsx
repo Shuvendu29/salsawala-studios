@@ -5,6 +5,7 @@ import { onAuthStateChanged, User } from 'firebase/auth'
 import { auth } from '@/lib/firebase/config'
 import { getUserProfile } from '@/lib/firebase/auth'
 import { UserProfile, UserRole } from '@/lib/types'
+import { getMockSession } from '@/lib/mock-auth'
 
 interface AuthContextType {
   user: User | null
@@ -27,6 +28,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Mock session takes priority over Firebase (for testing without Firebase setup)
+    const mockSession = getMockSession()
+    if (mockSession) {
+      const mockUser = {
+        uid: `mock-${mockSession.username}`,
+        displayName: mockSession.displayName,
+        email: `${mockSession.username}@mock.local`,
+      } as User
+      setUser(mockUser)
+      setProfile({
+        uid: mockUser.uid,
+        email: mockUser.email!,
+        displayName: mockSession.displayName,
+        photoURL: '',
+        role: mockSession.role,
+        enrolledClasses: [],
+        bookings: [],
+        joinedAt: null as any,
+        updatedAt: null as any,
+      })
+      setRole(mockSession.role)
+      setLoading(false)
+      return
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser)
       if (firebaseUser) {
