@@ -3,27 +3,30 @@
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './AuthProvider'
+import { CartProvider } from '@/lib/context/CartContext'
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <AuthProvider>
-      {children}
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          style: {
-            background: '#1A1A1A',
-            color: '#fff',
-            border: '1px solid #2A2A2A',
-          },
-          success: {
-            iconTheme: { primary: '#D4AF37', secondary: '#fff' },
-          },
-          error: {
-            iconTheme: { primary: '#C41E3A', secondary: '#fff' },
-          },
-        }}
-      />
+      <CartProvider>
+        {children}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: '#ffffff',
+              color: '#2d1b69',
+              border: '1px solid #ffc6ff',
+            },
+            success: {
+              iconTheme: { primary: '#bdb2ff', secondary: '#fff' },
+            },
+            error: {
+              iconTheme: { primary: '#ef4444', secondary: '#fff' },
+            },
+          }}
+        />
+      </CartProvider>
     </AuthProvider>
   )
 }

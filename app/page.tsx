@@ -1,4 +1,4 @@
-import { Hero } from '@/components/home/Hero'
+import { VideoHero } from '@/components/home/VideoHero'
 import { StatsBar } from '@/components/home/StatsBar'
 import { DanceStyles } from '@/components/home/DanceStyles'
 import { ClassesPreview } from '@/components/home/ClassesPreview'
@@ -12,7 +12,7 @@ import { ContactSection } from '@/components/home/ContactSection'
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      <VideoHero />
       <StatsBar />
       <DanceStyles />
       <ClassesPreview />

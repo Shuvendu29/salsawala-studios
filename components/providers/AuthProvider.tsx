@@ -41,11 +41,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         uid: mockUser.uid,
         email: mockUser.email!,
         displayName: mockSession.displayName,
-        photoURL: '',
         role: mockSession.role,
+        registrationStatus: 'active',
+        profileComplete: true,
+        linkedEmails: [mockUser.email!],
+        linkedPhones: [],
         enrolledClasses: [],
         bookings: [],
-        joinedAt: null as any,
+        createdAt: null as any,
         updatedAt: null as any,
       })
       setRole(mockSession.role)

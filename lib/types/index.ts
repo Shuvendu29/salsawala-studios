@@ -1,19 +1,253 @@
 import { Timestamp } from 'firebase/firestore'
 
-export type UserRole = 'user' | 'faculty' | 'admin'
+// ── Roles & Auth ──────────────────────────────────────────────────────────────
+
+export type UserRole = 'user' | 'faculty' | 'crew' | 'admin'
+export type RegistrationStatus =
+  | 'incomplete'        // profile not filled
+  | 'pending_payment'   // filled, needs online payment
+  | 'pending_approval'  // chose cash, waiting admin
+  | 'active'            // paid & approved
+  | 'paused'            // paused (pause fee paid)
+  | 'expired'           // validity ended
+
+export type PaymentMethod = 'online' | 'cash'
+export type PaymentStatus = 'pending' | 'confirmed' | 'cancelled' | 'refunded'
+export type CouponType = 'flat' | 'percent'
+export type CouponAppliesTo = 'all' | 'specific_event' | 'all_events' | 'specific_class' | 'all_classes'
+export type AttendanceStatus = 'present' | 'absent' | 'late'
+
+// ── User ──────────────────────────────────────────────────────────────────────
 
 export interface UserProfile {
   uid: string
-  email: string
   displayName: string
-  photoURL: string
-  role: UserRole
+  email?: string
   phone?: string
+  photoURL?: string
+  dob?: string
+  gender?: 'male' | 'female' | 'other' | 'prefer_not'
+  profilePicture?: string
+  yearsOfDancing?: number
+  role: UserRole
+  registrationStatus: RegistrationStatus
+  registrationExpiry?: Timestamp
+  pauseExpiry?: Timestamp
+  linkedEmails: string[]
+  linkedPhones: string[]
+  profileComplete: boolean
   enrolledClasses: string[]
   bookings: string[]
-  joinedAt: Timestamp
+  createdAt: Timestamp
   updatedAt: Timestamp
 }
+
+// ── Site Content ──────────────────────────────────────────────────────────────
+
+export interface SiteVideo {
+  id: string
+  url: string
+  storageRef: string
+  title: string
+  durationSec: number
+  order: number
+  active: boolean
+  uploadedAt: Timestamp
+}
+
+export interface HomeContent {
+  videos: SiteVideo[]
+  heroTitle: string
+  heroHighlight: string
+  heroSubtitle: string
+  stats: { label: string; value: string }[]
+  ctaPrimary: string
+  ctaSecondary: string
+}
+
+export interface SiteInfo {
+  studioName: string
+  tagline: string
+  address: string
+  phone: string
+  email: string
+  hours: string
+  instagram: string
+  facebook: string
+  youtube: string
+  aboutText: string
+  aboutMission: string
+}
+
+// ── Registration Config ───────────────────────────────────────────────────────
+
+export interface RegistrationConfig {
+  amount: number
+  validityMonths: number
+  pauseAmount: number
+  pauseValidityMonths: number
+  updatedAt: Timestamp
+}
+
+// ── Classes ───────────────────────────────────────────────────────────────────
+
+export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
+
+export interface DanceClass {
+  id: string
+  name: string
+  description: string
+  style: string
+  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels'
+  days: WeekDay[]
+  timeFrom: string
+  timeTo: string
+  maxDurationMonths: number
+  pricePerMonth: number
+  classesPerMonth: number
+  assignedFaculty: string[]
+  active: boolean
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+// ── Events ────────────────────────────────────────────────────────────────────
+
+export interface StudioEvent {
+  id: string
+  title: string
+  description: string
+  date: string
+  time: string
+  venue: string
+  price: number
+  capacity: number
+  enrolled: number
+  type: 'workshop' | 'social' | 'performance' | 'competition'
+  tag: string
+  gradient: string
+  assignedFaculty: string[]
+  active: boolean
+  createdAt: Timestamp
+}
+
+// ── Coupons ───────────────────────────────────────────────────────────────────
+
+export interface Coupon {
+  id: string
+  code: string
+  type: CouponType
+  value: number
+  maxDiscount?: number
+  appliesTo: CouponAppliesTo
+  targetId?: string
+  usagePerUser: number
+  totalUsageLimit?: number
+  totalUsed: number
+  usedBy: Record<string, number>
+  active: boolean
+  expiresAt?: Timestamp
+  createdAt: Timestamp
+}
+
+// ── Cart ──────────────────────────────────────────────────────────────────────
+
+export interface CartItem {
+  type: 'class' | 'event' | 'registration' | 'pause'
+  id: string
+  name: string
+  pricePerUnit: number
+  durationMonths?: number
+  maxDurationMonths?: number
+  quantity: number
+  classesPerMonth?: number
+}
+
+// ── Orders ────────────────────────────────────────────────────────────────────
+
+export interface Order {
+  id: string
+  userId: string
+  userName: string
+  userEmail?: string
+  userPhone?: string
+  items: CartItem[]
+  subtotal: number
+  discountAmount: number
+  couponCode?: string
+  totalAmount: number
+  paymentMethod: PaymentMethod
+  paymentStatus: PaymentStatus
+  razorpayOrderId?: string
+  razorpayPaymentId?: string
+  notes?: string
+  createdAt: Timestamp
+  confirmedAt?: Timestamp
+}
+
+// ── Class Enrollment ──────────────────────────────────────────────────────────
+
+export interface ClassEnrollment {
+  id: string
+  userId: string
+  classId: string
+  className: string
+  durationMonths: number
+  startDate: Timestamp
+  endDate: Timestamp
+  status: 'active' | 'paused' | 'expired' | 'cancelled'
+  orderId: string
+  createdAt: Timestamp
+}
+
+// ── Event Registration ────────────────────────────────────────────────────────
+
+export interface EventRegistration {
+  id: string
+  userId?: string
+  guestPhone?: string
+  eventId: string
+  eventTitle: string
+  name: string
+  email?: string
+  gender: string
+  source: string
+  paymentStatus: PaymentStatus
+  paymentMethod: PaymentMethod
+  orderId?: string
+  amount: number
+  createdAt: Timestamp
+}
+
+// ── Faculty ───────────────────────────────────────────────────────────────────
+
+export interface FacultyProfile {
+  id: string
+  uid?: string
+  name: string
+  email?: string
+  phone?: string
+  role: 'faculty' | 'crew' | 'admin'
+  assignedClasses: string[]
+  assignedEvents: string[]
+  active: boolean
+  createdAt: Timestamp
+}
+
+// ── Attendance ────────────────────────────────────────────────────────────────
+
+export interface AttendanceRecord {
+  id: string
+  type: 'class' | 'event'
+  targetId: string
+  date: string
+  markedBy: string
+  students: Record<string, AttendanceStatus>
+  notes?: string
+  createdAt: Timestamp
+}
+
+// ── Legacy (for existing static data) ────────────────────────────────────────
 
 export interface DanceStyle {
   id: string
@@ -33,86 +267,7 @@ export interface Instructor {
   styles: string[]
   experience: string
   photoGradient: string
-  social?: {
-    instagram?: string
-    facebook?: string
-  }
-}
-
-export interface Class {
-  id: string
-  name: string
-  style: string
-  instructorId: string
-  instructorName: string
-  day: string
-  time: string
-  duration: number
-  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels'
-  capacity: number
-  enrolled: number
-  price: number
-  description?: string
-  isOnline: boolean
-  isActive: boolean
-  createdAt: Timestamp
-  updatedAt: Timestamp
-}
-
-export interface Event {
-  id: string
-  title: string
-  description: string
-  date: Timestamp
-  time: string
-  venue: string
-  price: number
-  capacity: number
-  enrolled: number
-  type: 'workshop' | 'social' | 'performance' | 'competition'
-  imageGradient?: string
-  createdAt: Timestamp
-}
-
-export interface Booking {
-  id: string
-  userId: string
-  userName: string
-  userEmail: string
-  classId?: string
-  eventId?: string
-  type: 'class' | 'event'
-  status: 'confirmed' | 'pending' | 'cancelled'
-  paymentStatus: 'paid' | 'pending' | 'free'
-  paymentId?: string
-  amount: number
-  date: string
-  createdAt: Timestamp
-}
-
-export interface Attendance {
-  id: string
-  userId: string
-  userName: string
-  classId: string
-  facultyId: string
-  date: string
-  status: 'present' | 'absent' | 'late'
-  feedback?: string
-  markedAt: Timestamp
-}
-
-export interface Review {
-  id: string
-  userId: string
-  userName: string
-  userPhotoURL?: string
-  rating: number
-  text: string
-  classId?: string
-  instructorId?: string
-  approved: boolean
-  createdAt: Timestamp
+  social?: { instagram?: string; youtube?: string; facebook?: string }
 }
 
 export interface Testimonial {
@@ -123,19 +278,4 @@ export interface Testimonial {
   style: string
   duration: string
   avatarGradient: string
-}
-
-export interface NavItem {
-  label: string
-  href: string
-  children?: NavItem[]
-}
-
-export interface ScheduleSlot {
-  day: string
-  time: string
-  style: string
-  instructor: string
-  level: string
-  spots: number
 }
