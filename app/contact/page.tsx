@@ -21,8 +21,10 @@ export default function ContactPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1200))
-    toast.success('Message sent! We\'ll get back to you within 24 hours.')
+    const body = `Name: ${form.name}%0APhone: ${form.phone}%0A%0A${form.message}`
+    const mailtoUrl = `mailto:salsawalastudios@gmail.com?subject=${encodeURIComponent(form.subject || 'Enquiry from website')}&body=${body}`
+    window.open(mailtoUrl, '_blank')
+    toast.success("Your email app has opened — just hit Send!")
     setForm({ name: '', email: '', phone: '', subject: '', message: '' })
     setLoading(false)
   }

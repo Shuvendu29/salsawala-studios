@@ -91,7 +91,9 @@ export default function EventsPage() {
                         </span>
                         {event.price > 0 && <span className="text-sm text-ink/50 font-body ml-1">/person</span>}
                       </div>
-                      <Button size="md">Register Now <ArrowRight className="h-4 w-4" /></Button>
+                      <Link href={`/contact?subject=Register for ${encodeURIComponent(event.title)}`}>
+                        <Button size="md">Register Now <ArrowRight className="h-4 w-4" /></Button>
+                      </Link>
                     </div>
                   </div>
                 </div>

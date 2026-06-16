@@ -78,7 +78,7 @@ export default function GalleryPage() {
             ))}
           </div>
           <p className="text-center text-ink/40 text-sm font-body mt-8">
-            Actual photos will be loaded from Firebase Storage. Replace with real studio images.
+            More photos coming soon — follow us on Instagram <span className="text-primary-dark">@salsawalastudios</span>
           </p>
         </div>
       </section>
