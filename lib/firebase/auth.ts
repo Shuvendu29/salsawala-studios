@@ -21,6 +21,7 @@ import {
 import { auth, db } from './config'
 import { UserProfile, UserRole } from '../types'
 import { clearMockSession, getMockSession } from '../mock-auth'
+import { MOCK_MODE, store } from '../mock-data'
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -157,10 +158,16 @@ export async function createUserProfile(
 }
 
 export async function updateUserProfile(uid: string, data: Partial<UserProfile>): Promise<void> {
+  if (MOCK_MODE) {
+    const i = store.users.findIndex(u => u.uid === uid)
+    if (i !== -1) store.users[i] = { ...store.users[i], ...data }
+    return
+  }
   await updateDoc(doc(db, 'users', uid), { ...data, updatedAt: serverTimestamp() })
 }
 
 export async function getUserProfile(uid: string): Promise<UserProfile | null> {
+  if (MOCK_MODE) return store.users.find(u => u.uid === uid) ?? null
   const snap = await getDoc(doc(db, 'users', uid))
   return snap.exists() ? (snap.data() as UserProfile) : null
 }
