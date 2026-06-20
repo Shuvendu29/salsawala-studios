@@ -67,7 +67,9 @@ export default function LoginPage() {
       if (mockSession) {
         saveMockSession(mockSession)
         toast.success(`Welcome, ${mockSession.displayName}!`)
-        redirectByRole(mockSession.role)
+        // Full reload required so AuthProvider re-reads sessionStorage on mount
+        const dest = mockSession.role === 'admin' ? '/admin' : mockSession.role === 'faculty' ? '/faculty' : '/dashboard'
+        window.location.href = dest
         return
       }
       await loginWithEmail(email, password)

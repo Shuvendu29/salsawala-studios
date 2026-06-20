@@ -4,8 +4,6 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { danceStyles } from '@/lib/data/danceStyles'
 
 export function DanceStyles() {
-  const featured = danceStyles.slice(0, 8)
-
   return (
     <section className="py-24 bg-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,7 +15,7 @@ export function DanceStyles() {
         />
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {featured.map((style) => (
+          {danceStyles.map((style) => (
             <Link
               key={style.id}
               href={`/classes#${style.id}`}
@@ -41,14 +39,6 @@ export function DanceStyles() {
           ))}
         </div>
 
-        <div className="mt-10 text-center">
-          <Link
-            href="/classes"
-            className="inline-flex items-center gap-2 text-primary-dark hover:text-primary-600 font-body font-medium transition-colors"
-          >
-            View all 15+ dance styles <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
       </div>
     </section>
   )
