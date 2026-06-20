@@ -29,7 +29,7 @@ export function Testimonials() {
               </div>
 
               {/* Text */}
-              <p className="font-body text-sm text-ink/70 leading-relaxed mb-6 italic">
+              <p className="font-body text-sm text-ink/80 leading-relaxed mb-6 italic">
                 &ldquo;{t.text}&rdquo;
               </p>
 

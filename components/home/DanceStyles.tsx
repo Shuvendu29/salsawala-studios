@@ -29,7 +29,7 @@ export function DanceStyles() {
               <div className="relative z-10 p-5 flex flex-col h-full min-h-[140px]">
                 <div className="text-3xl mb-3">{style.icon}</div>
                 <h3 className="font-display text-lg font-bold text-ink mb-1">{style.name}</h3>
-                <p className="font-body text-xs text-ink/50 leading-relaxed line-clamp-2 flex-1">
+                <p className="font-body text-xs text-ink/65 leading-relaxed line-clamp-2 flex-1">
                   {style.description}
                 </p>
                 <div className="mt-3 flex items-center justify-between">

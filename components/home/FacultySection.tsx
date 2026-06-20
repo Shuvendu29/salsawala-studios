@@ -45,7 +45,7 @@ export function FacultySection() {
               <div className="p-6">
                 <h3 className="font-display text-xl font-bold text-ink mb-0.5">{instructor.name}</h3>
                 <p className="font-body text-sm text-primary-dark mb-3">{instructor.title}</p>
-                <p className="font-body text-sm text-ink/50 leading-relaxed mb-4 line-clamp-3">
+                <p className="font-body text-sm text-ink/70 leading-relaxed mb-4 line-clamp-3">
                   {instructor.bio}
                 </p>
 

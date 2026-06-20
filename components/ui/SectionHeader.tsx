@@ -31,7 +31,7 @@ export function SectionHeader({
         )}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-ink/60 font-body text-lg max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-ink/70 font-body text-lg max-w-2xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}
