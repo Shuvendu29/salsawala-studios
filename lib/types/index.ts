@@ -2,20 +2,32 @@ import { Timestamp } from 'firebase/firestore'
 
 // ── Roles & Auth ──────────────────────────────────────────────────────────────
 
-export type UserRole = 'user' | 'faculty' | 'crew' | 'admin'
+export type UserRole = 'user' | 'student' | 'member' | 'faculty' | 'crew' | 'admin'
 export type RegistrationStatus =
   | 'incomplete'        // profile not filled
-  | 'pending_payment'   // filled, needs online payment
-  | 'pending_approval'  // chose cash, waiting admin
-  | 'active'            // paid & approved
-  | 'paused'            // paused (pause fee paid)
+  | 'active'            // profile complete (free)
+  | 'paused'            // paused
   | 'expired'           // validity ended
+  // legacy — kept for old cash-approval flow
+  | 'pending_payment'
+  | 'pending_approval'
 
 export type PaymentMethod = 'online' | 'cash'
 export type PaymentStatus = 'pending' | 'confirmed' | 'cancelled' | 'refunded'
 export type CouponType = 'flat' | 'percent'
 export type CouponAppliesTo = 'all' | 'specific_event' | 'all_events' | 'specific_class' | 'all_classes'
 export type AttendanceStatus = 'present' | 'absent' | 'late'
+
+export type DanceLevel =
+  | 'Beginner'
+  | 'Advance Beginner'
+  | 'Improver'
+  | 'Advance Improver'
+  | 'Intermediate'
+  | 'Advance Intermediate'
+  | 'Advance'
+  | 'Open Level'
+  | 'All Levels'   // legacy value in existing data
 
 // ── User ──────────────────────────────────────────────────────────────────────
 
@@ -25,9 +37,9 @@ export interface UserProfile {
   email?: string
   phone?: string
   photoURL?: string
+  profilePicture?: string
   dob?: string
   gender?: 'male' | 'female' | 'other' | 'prefer_not'
-  profilePicture?: string
   yearsOfDancing?: number
   role: UserRole
   registrationStatus: RegistrationStatus
@@ -40,6 +52,35 @@ export interface UserProfile {
   bookings: string[]
   createdAt: Timestamp
   updatedAt: Timestamp
+}
+
+// ── Price & Faculty structures ────────────────────────────────────────────────
+
+export interface PriceTier {
+  price: number       // ₹ amount
+  maxMonths: number   // user can choose up to this many months
+}
+
+export interface AssignedMember {
+  uid: string
+  name: string
+  photoURL?: string
+  role: 'faculty' | 'crew'
+}
+
+export interface GuestFaculty {
+  name: string
+  profileLink?: string
+}
+
+// ── Day Off / Holidays ───────────────────────────────────────────────────────
+
+export interface DayOff {
+  id: string
+  date: string    // YYYY-MM-DD
+  name: string    // e.g. "Diwali", "Independence Day"
+  notes?: string
+  createdAt: Timestamp
 }
 
 // ── Site Content ──────────────────────────────────────────────────────────────
@@ -98,14 +139,21 @@ export interface DanceClass {
   name: string
   description: string
   style: string
-  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels'
+  level: DanceLevel
   days: WeekDay[]
   timeFrom: string
   timeTo: string
-  maxDurationMonths: number
-  pricePerMonth: number
-  classesPerMonth: number
-  assignedFaculty: string[]
+  // New price structure (admin creates with this)
+  priceTiers?: PriceTier[]
+  // New faculty assignment
+  assignedMembers?: AssignedMember[]
+  guestFaculty?: GuestFaculty[]
+  // Legacy fields — kept so existing mock data still works
+  pricePerMonth?: number
+  classesPerMonth?: number
+  maxDurationMonths?: number
+  assignedFaculty?: string[]
+  imageUrl?: string
   active: boolean
   createdAt: Timestamp
   updatedAt: Timestamp
@@ -126,6 +174,7 @@ export interface StudioEvent {
   type: 'workshop' | 'social' | 'performance' | 'competition'
   tag: string
   gradient: string
+  imageUrl?: string
   assignedFaculty: string[]
   active: boolean
   createdAt: Timestamp
@@ -219,7 +268,7 @@ export interface EventRegistration {
   createdAt: Timestamp
 }
 
-// ── Faculty ───────────────────────────────────────────────────────────────────
+// ── Faculty / Member Profile ──────────────────────────────────────────────────
 
 export interface FacultyProfile {
   id: string
@@ -227,6 +276,7 @@ export interface FacultyProfile {
   name: string
   email?: string
   phone?: string
+  photoURL?: string
   role: 'faculty' | 'crew' | 'admin'
   assignedClasses: string[]
   assignedEvents: string[]
@@ -255,7 +305,7 @@ export interface DanceStyle {
   description: string
   icon: string
   color: string
-  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels'
+  level: DanceLevel
   origin: string
 }
 

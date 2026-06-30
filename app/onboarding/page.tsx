@@ -2,26 +2,23 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Camera, CheckCircle, ChevronRight, Loader2, Phone } from 'lucide-react'
+import { Camera, CheckCircle, ChevronRight, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { updateUserProfile } from '@/lib/firebase/auth'
-import { getRegistrationConfig, createOrder } from '@/lib/firebase/firestore'
 import { uploadProfilePicture } from '@/lib/firebase/storage'
 import { setupRecaptcha, sendPhoneOTP, verifyPhoneOTP } from '@/lib/firebase/auth'
-import { RegistrationConfig } from '@/lib/types'
 import { PageLoader } from '@/components/ui/LoadingSpinner'
 import toast from 'react-hot-toast'
 import type { ConfirmationResult } from 'firebase/auth'
 
-const STEPS = ['Profile', 'Verify', 'Payment', 'Done']
+const STEPS = ['Profile', 'Verify Phone', 'Done']
 
 export default function OnboardingPage() {
   const { user, profile, loading } = useAuth()
   const router = useRouter()
   const [step, setStep] = useState(0)
   const [saving, setSaving] = useState(false)
-  const [config, setConfig] = useState<RegistrationConfig | null>(null)
 
   // Step 0 — Profile
   const [form, setForm] = useState({ name: '', dob: '', gender: '', yearsOfDancing: '', phone: '' })
@@ -37,10 +34,6 @@ export default function OnboardingPage() {
   const [verifyingOtp, setVerifyingOtp] = useState(false)
   const [phoneVerified, setPhoneVerified] = useState(false)
 
-  // Step 2 — Payment
-  const [paymentMethod, setPaymentMethod] = useState<'online' | 'cash'>('online')
-  const [processing, setProcessing] = useState(false)
-
   useEffect(() => {
     if (!loading && !user) router.push('/login')
     if (profile?.profileComplete && profile.registrationStatus === 'active') {
@@ -54,7 +47,6 @@ export default function OnboardingPage() {
       }))
       if (profile.phone) setPhoneVerified(true)
     }
-    getRegistrationConfig().then(c => setConfig(c))
   }, [user, profile, loading, router])
 
   if (loading) return <PageLoader />
@@ -86,7 +78,8 @@ export default function OnboardingPage() {
         phone: form.phone,
         profilePicture,
         profileComplete: true,
-        registrationStatus: 'pending_payment',
+        registrationStatus: 'active',
+        role: 'student',
       })
       setStep(1)
     } catch (err: any) {
@@ -127,50 +120,6 @@ export default function OnboardingPage() {
       toast.error('Invalid OTP. Please try again.')
     } finally {
       setVerifyingOtp(false)
-    }
-  }
-
-  async function handlePayment() {
-    if (!config || !user) return
-    setProcessing(true)
-    try {
-      const orderId = await createOrder({
-        userId: user.uid,
-        userName: form.name || profile?.displayName || '',
-        userEmail: user.email || undefined,
-        userPhone: form.phone || undefined,
-        items: [{
-          type: 'registration',
-          id: 'registration',
-          name: 'Studio Registration',
-          pricePerUnit: config.amount,
-          quantity: 1,
-        }],
-        subtotal: config.amount,
-        discountAmount: 0,
-        totalAmount: config.amount,
-        paymentMethod,
-        paymentStatus: paymentMethod === 'cash' ? 'pending' : 'pending',
-      })
-
-      if (paymentMethod === 'cash') {
-        await updateUserProfile(user.uid, { registrationStatus: 'pending_approval' })
-        toast.success('Registration submitted! Admin will approve after cash payment.')
-      } else {
-        // TODO: integrate Razorpay payment gateway here before go-live
-        const expiry = new Date()
-        expiry.setMonth(expiry.getMonth() + (config.validityMonths || 12))
-        await updateUserProfile(user.uid, {
-          registrationStatus: 'active',
-          registrationExpiry: expiry as any,
-        })
-        toast.success('Payment successful! Welcome to Salsawala Studios!')
-      }
-      setStep(3)
-    } catch (err: any) {
-      toast.error(err.message || 'Payment failed')
-    } finally {
-      setProcessing(false)
     }
   }
 
@@ -280,7 +229,7 @@ export default function OnboardingPage() {
                 <div className="text-center py-8">
                   <CheckCircle className="h-16 w-16 text-emerald-500 mx-auto mb-4" />
                   <p className="font-body text-ink font-medium">Phone already verified!</p>
-                  <Button className="mt-4" onClick={() => setStep(2)}>Continue to Payment</Button>
+                  <Button className="mt-4" onClick={() => setStep(2)}>Continue</Button>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -305,69 +254,29 @@ export default function OnboardingPage() {
                     </>
                   )}
                   <button onClick={() => setStep(2)} className="w-full text-center text-xs text-ink/40 font-body hover:text-ink/60 mt-2">
-                    Skip for now
+                    Skip for now (verify later)
                   </button>
                 </div>
               )}
             </div>
           )}
 
-          {/* Step 2 — Payment */}
+          {/* Step 2 — Done */}
           {step === 2 && (
-            <div>
-              <h1 className="font-display text-2xl font-bold text-ink mb-1">Registration Payment</h1>
-              <p className="font-body text-sm text-ink/60 mb-6">Pay the one-time registration fee to access the studio.</p>
-
-              <div className="bg-dark-surface border border-dark-border rounded-2xl p-5 mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-body text-sm text-ink/70">Registration Fee</span>
-                  <span className="font-display font-bold text-ink">₹{config?.amount?.toLocaleString() || '—'}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-body text-sm text-ink/70">Validity</span>
-                  <span className="font-body text-sm text-ink/70">{config?.validityMonths || '—'} months</span>
-                </div>
-              </div>
-
-              <div className="space-y-3 mb-6">
-                <p className="text-sm font-body text-ink/70">Payment Method</p>
-                {(['online', 'cash'] as const).map(method => (
-                  <button key={method} onClick={() => setPaymentMethod(method)}
-                    className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
-                      paymentMethod === method ? 'border-primary bg-primary/10' : 'border-dark-border'
-                    }`}>
-                    <div className={`h-4 w-4 rounded-full border-2 ${paymentMethod === method ? 'border-primary bg-primary' : 'border-ink/30'}`} />
-                    <div className="text-left">
-                      <p className="font-body text-sm font-medium text-ink capitalize">{method === 'online' ? 'Pay Online (Razorpay)' : 'Pay at Studio (Cash)'}</p>
-                      <p className="font-body text-xs text-ink/50">
-                        {method === 'online' ? 'Instant activation after payment' : 'Wait for admin approval after visiting studio'}
-                      </p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-
-              <Button onClick={handlePayment} loading={processing} className="w-full">
-                {paymentMethod === 'online' ? `Pay ₹${config?.amount?.toLocaleString() || ''}` : 'Submit for Approval'}
-              </Button>
-            </div>
-          )}
-
-          {/* Step 3 — Done */}
-          {step === 3 && (
             <div className="text-center py-4">
               <div className="h-20 w-20 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="h-10 w-10 text-primary-dark" />
               </div>
               <h1 className="font-display text-2xl font-bold text-ink mb-2">
-                {paymentMethod === 'cash' ? 'Request Submitted!' : 'Welcome to Salsawala!'}
+                Welcome to Salsawala!
               </h1>
-              <p className="font-body text-sm text-ink/60 mb-8">
-                {paymentMethod === 'cash'
-                  ? 'Your registration is pending admin approval. Visit the studio to pay the fee.'
-                  : 'Your account is active. Browse classes and start your dance journey!'
-                }
+              <p className="font-body text-sm text-ink/60 mb-4">
+                Your profile is complete. You are now a Student — explore classes and start your dance journey!
               </p>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+                <CheckCircle className="h-4 w-4 text-emerald-500" />
+                <span className="font-body text-sm font-medium text-ink">Badge: Student</span>
+              </div>
               <Button onClick={() => router.push('/dashboard')} className="w-full">
                 Go to Dashboard
               </Button>

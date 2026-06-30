@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Clock, Users, ArrowRight, ShoppingCart, CheckCircle } from 'lucide-react'
+import { Clock, ExternalLink, ShoppingCart, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
@@ -55,13 +55,16 @@ export default function ClassesPage() {
       toast.error('Complete registration to enroll in classes')
       return
     }
+    const lowestTier = cls.priceTiers?.length
+      ? cls.priceTiers.reduce((a, b) => a.price <= b.price ? a : b)
+      : null
     addItem({
       type: 'class',
       id: cls.id,
       name: cls.name,
-      pricePerUnit: cls.pricePerMonth,
+      pricePerUnit: lowestTier?.price ?? cls.pricePerMonth ?? 0,
       durationMonths: 1,
-      maxDurationMonths: cls.maxDurationMonths,
+      maxDurationMonths: lowestTier?.maxMonths ?? cls.maxDurationMonths,
       quantity: 1,
       classesPerMonth: cls.classesPerMonth,
     })
@@ -131,21 +134,44 @@ export default function ClassesPage() {
 
                       <p className="font-body text-sm text-ink/60 mb-3 line-clamp-2">{cls.description}</p>
 
-                      <div className="space-y-1.5 mb-4">
+                      <div className="space-y-1.5 mb-3">
                         <div className="flex items-center gap-2 text-sm text-ink/50 font-body">
                           <Clock className="h-3.5 w-3.5 text-primary-dark" />
                           {cls.days.join(', ')} · {cls.timeFrom}–{cls.timeTo}
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-ink/50 font-body">
-                          <Users className="h-3.5 w-3.5 text-primary-dark" />
-                          {cls.classesPerMonth} classes/month
-                        </div>
+                        {/* Faculty names */}
+                        {((cls.assignedMembers?.length ?? 0) > 0 || (cls.guestFaculty?.length ?? 0) > 0) && (
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {cls.assignedMembers?.map(m => (
+                              <span key={m.uid} className="font-body text-xs text-primary-dark font-medium">{m.name}</span>
+                            ))}
+                            {cls.guestFaculty?.map((g, i) => (
+                              g.profileLink
+                                ? <a key={i} href={g.profileLink} target="_blank" rel="noopener noreferrer"
+                                    className="font-body text-xs text-gold-dark font-medium inline-flex items-center gap-0.5 hover:underline">
+                                    {g.name}<ExternalLink className="h-3 w-3" />
+                                  </a>
+                                : <span key={i} className="font-body text-xs text-gold-dark font-medium">{g.name}</span>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex items-center justify-between pt-3 border-t border-dark-border">
                         <div>
-                          <span className="font-display font-bold text-ink">₹{cls.pricePerMonth.toLocaleString()}</span>
-                          <span className="text-xs text-ink/40 font-body">/month</span>
+                          {cls.priceTiers?.length ? (
+                            <div>
+                              <span className="font-display font-bold text-ink">
+                                ₹{Math.min(...cls.priceTiers.map(t => t.price)).toLocaleString()}
+                              </span>
+                              <span className="text-xs text-ink/40 font-body"> onwards</span>
+                            </div>
+                          ) : (
+                            <div>
+                              <span className="font-display font-bold text-ink">₹{(cls.pricePerMonth ?? 0).toLocaleString()}</span>
+                              <span className="text-xs text-ink/40 font-body">/month</span>
+                            </div>
+                          )}
                         </div>
                         {inCart ? (
                           <Link href="/cart">

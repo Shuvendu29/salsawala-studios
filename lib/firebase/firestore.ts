@@ -8,7 +8,7 @@ import {
   HomeContent, SiteInfo, RegistrationConfig, SiteVideo,
   DanceClass, StudioEvent, Coupon, Order, ClassEnrollment,
   EventRegistration, FacultyProfile, AttendanceRecord,
-  CartItem, UserProfile,
+  CartItem, UserProfile, DayOff,
 } from '../types'
 import { MOCK_MODE, store, genId } from '../mock-data'
 
@@ -109,11 +109,10 @@ export async function updateRegistrationConfig(data: Partial<RegistrationConfig>
 
 export async function getClasses(activeOnly = true): Promise<DanceClass[]> {
   if (MOCK_MODE) return activeOnly ? store.classes.filter(c => c.active) : [...store.classes]
-  const q = activeOnly
-    ? query(collection(db, 'classes'), where('active', '==', true), orderBy('createdAt', 'desc'))
-    : query(collection(db, 'classes'), orderBy('createdAt', 'desc'))
-  const snap = await getDocs(q)
-  return snap.docs.map(d => ({ id: d.id, ...d.data() } as DanceClass))
+  const snap = await getDocs(collection(db, 'classes'))
+  const all = snap.docs.map(d => ({ id: d.id, ...d.data() } as DanceClass))
+  const filtered = activeOnly ? all.filter(c => c.active) : all
+  return filtered.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0))
 }
 
 export async function getClassById(id: string): Promise<DanceClass | null> {
@@ -161,11 +160,10 @@ export async function getEvents(activeOnly = true): Promise<StudioEvent[]> {
     const list = activeOnly ? store.events.filter(e => e.active) : [...store.events]
     return list.sort((a, b) => a.date.localeCompare(b.date))
   }
-  const q = activeOnly
-    ? query(collection(db, 'events'), where('active', '==', true), orderBy('date', 'asc'))
-    : query(collection(db, 'events'), orderBy('date', 'asc'))
-  const snap = await getDocs(q)
-  return snap.docs.map(d => ({ id: d.id, ...d.data() } as StudioEvent))
+  const snap = await getDocs(collection(db, 'events'))
+  const all = snap.docs.map(d => ({ id: d.id, ...d.data() } as StudioEvent))
+  const filtered = activeOnly ? all.filter(e => e.active) : all
+  return filtered.sort((a, b) => a.date.localeCompare(b.date))
 }
 
 export async function getEventById(id: string): Promise<StudioEvent | null> {
@@ -573,4 +571,55 @@ export function subscribeToAllHomeVideos(cb: (videos: SiteVideo[]) => void) {
   }
   const q = query(collection(db, 'siteContent', 'home', 'videos'), orderBy('order', 'asc'))
   return onSnapshot(q, snap => cb(snap.docs.map(d => ({ id: d.id, ...d.data() } as SiteVideo))))
+}
+
+// ── User Search (for admin member assignment) ──────────────────────────────────
+
+export async function searchUsers(q: string): Promise<UserProfile[]> {
+  const lower = q.toLowerCase().trim()
+  if (!lower) return []
+  if (MOCK_MODE) {
+    return store.users.filter(u =>
+      u.displayName?.toLowerCase().includes(lower) ||
+      u.email?.toLowerCase().includes(lower) ||
+      u.phone?.includes(lower)
+    ).slice(0, 8)
+  }
+  // Firestore doesn't support full-text search; fetch all and filter client-side
+  const snap = await getDocs(collection(db, 'users'))
+  const all = snap.docs.map(d => d.data() as UserProfile)
+  return all.filter(u =>
+    u.displayName?.toLowerCase().includes(lower) ||
+    u.email?.toLowerCase().includes(lower) ||
+    u.phone?.includes(lower)
+  ).slice(0, 8)
+}
+
+// ── Day Offs / Holidays ───────────────────────────────────────────────────────
+
+export async function getDayOffs(): Promise<DayOff[]> {
+  if (MOCK_MODE) return [...(store as any).dayOffs ?? []]
+  const snap = await getDocs(query(collection(db, 'dayOffs'), orderBy('date', 'asc')))
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as DayOff))
+}
+
+export async function createDayOff(data: Omit<DayOff, 'id' | 'createdAt'>): Promise<string> {
+  if (MOCK_MODE) {
+    const id = genId()
+    const s = store as any
+    if (!s.dayOffs) s.dayOffs = []
+    s.dayOffs.push({ ...data, id, createdAt: { seconds: Math.floor(Date.now() / 1000), nanoseconds: 0 } })
+    return id
+  }
+  const ref = await addDoc(collection(db, 'dayOffs'), { ...data, createdAt: serverTimestamp() })
+  return ref.id
+}
+
+export async function deleteDayOff(id: string): Promise<void> {
+  if (MOCK_MODE) {
+    const s = store as any
+    if (s.dayOffs) s.dayOffs = s.dayOffs.filter((d: DayOff) => d.id !== id)
+    return
+  }
+  await deleteDoc(doc(db, 'dayOffs', id))
 }

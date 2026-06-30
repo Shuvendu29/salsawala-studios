@@ -216,7 +216,7 @@ export default function FacultyDashboard() {
                           <span>·</span>
                           <span>{cls.classesPerMonth} classes/month</span>
                           <span>·</span>
-                          <span>₹{cls.pricePerMonth.toLocaleString()}/month</span>
+                          <span>₹{(cls.pricePerMonth ?? 0).toLocaleString()}/month</span>
                         </div>
                       </div>
                       <Button size="sm" variant="outline" onClick={() => { setSelectedClass(cls); setTab('attendance') }}>
